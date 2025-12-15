@@ -64,14 +64,13 @@
   // Check if timer is at initial state (not started)
   let isAtInitial = $derived(timeRemaining === totalDuration && !isRunning);
 
-  // Derive mode-specific text color class for light and dark modes
-  // Dark mode uses text-red-400 for all modes for consistent visibility
+  // Derive mode-specific text colors with matching dark-mode variants
   let modeTextClass = $derived(
     currentModeId === 'shortBreak'
-      ? 'text-emerald-600 dark:text-red-400'
+      ? 'text-emerald-600 dark:text-emerald-300'
       : currentModeId === 'longBreak'
-        ? 'text-blue-600 dark:text-red-400'
-        : 'text-red-600 dark:text-red-400'
+        ? 'text-blue-600 dark:text-blue-300'
+        : 'text-red-600 dark:text-red-300'
   );
   
   // ============================================
