@@ -1,0 +1,230 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Custom Properties for Theme Colors - Light Mode */
+:root {
+  /* Focus Mode (Red) */
+  --focus-primary: #ef4444;
+  --focus-primary-rgb: 239, 68, 68;
+  --focus-bg-from: #fef2f2;
+  --focus-bg-to: #fee2e2;
+  
+  /* Short Break Mode (Emerald) */
+  --short-break-primary: #10b981;
+  --short-break-primary-rgb: 16, 185, 129;
+  --short-break-bg-from: #ecfdf5;
+  --short-break-bg-to: #d1fae5;
+  
+  /* Long Break Mode (Blue) */
+  --long-break-primary: #3b82f6;
+  --long-break-primary-rgb: 59, 130, 246;
+  --long-break-bg-from: #eff6ff;
+  --long-break-bg-to: #dbeafe;
+  
+  /* Glass container colors */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --kbd-bg: rgba(255, 255, 255, 0.3);
+  
+  /* Mode text colors (light mode) */
+  --focus-text-color: #b91c1c;
+  --short-break-text-color: #047857; /* green-700 */
+  --long-break-text-color: #1d4ed8;  /* blue-700 */
+}
+
+/* Dark Mode Colors */
+:root.dark {
+  /* Focus Mode (Red) - Dark */
+  --focus-bg-from: #1f1215;
+  --focus-bg-to: #2d1a1e;
+  
+  /* Short Break Mode (Emerald) - Dark */
+  --short-break-bg-from: #0d1f17;
+  --short-break-bg-to: #132a1f;
+  
+  /* Long Break Mode (Blue) - Dark */
+  --long-break-bg-from: #0f172a;
+  --long-break-bg-to: #1e293b;
+  
+  /* Glass container colors - Dark */
+  --glass-bg: rgba(30, 30, 30, 0.7);
+  --glass-border: rgba(60, 60, 60, 0.3);
+  --kbd-bg: rgba(0, 0, 0, 0.3);
+  
+  /* Mode text colors (dark mode overrides) */
+  --short-break-text-color: #86efac; /* green-300 */
+  --long-break-text-color: #93c5fd;  /* blue-300 */
+}
+
+/* Base Styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    @apply m-0 p-0 min-h-screen;
+    overflow-x: hidden;
+  }
+  
+  /* Ensure consistent box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+/* Component Styles */
+@layer components {
+  /* Glassmorphism Container */
+  .glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: background 300ms ease, border-color 300ms ease;
+  }
+  
+  /* Timer Display Font */
+  .timer-font {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    font-feature-settings: 'tnum' 1, 'kern' 1;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Mode Button Base Styles */
+  .mode-btn {
+    @apply relative flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm;
+    @apply transition-all duration-150 ease-out;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+  
+  .mode-btn:not(:disabled):hover {
+    @apply scale-105;
+  }
+  
+  .mode-btn:not(:disabled):active {
+    @apply scale-95;
+  }
+  
+  .mode-btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  /* Control Button Styles */
+  .control-btn {
+    @apply relative flex items-center justify-center;
+    @apply w-14 h-14 rounded-full;
+    @apply transition-all duration-150 ease-out;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+  
+  .control-btn:hover {
+    @apply scale-105;
+  }
+  
+  .control-btn:active {
+    @apply scale-95;
+  }
+  
+  /* Primary (Play/Pause) Button */
+  .control-btn-primary {
+    @apply w-16 h-16 shadow-lg;
+  }
+  
+  /* Progress Ring Styles */
+  .progress-ring {
+    transform: rotate(-90deg);
+    transform-origin: center;
+  }
+  
+  .progress-ring-track {
+    fill: none;
+    stroke-linecap: round;
+  }
+  
+  .progress-ring-progress {
+    fill: none;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+  }
+}
+
+/* Utility Styles */
+@layer utilities {
+  /* Pulse Animation for Paused State */
+  .animate-pulse-paused {
+    animation: pulse-paused 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-paused {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Celebration Flash Animation */
+  .animate-celebration {
+    animation: celebration-flash 0.6s ease-out;
+  }
+  
+  @keyframes celebration-flash {
+    0% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    25% {
+      transform: scale(1.02);
+      filter: brightness(1.15);
+    }
+    50% {
+      transform: scale(1.05);
+      filter: brightness(1.3);
+    }
+    75% {
+      transform: scale(1.02);
+      filter: brightness(1.15);
+    }
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+  }
+  
+  /* Smooth Background Transition */
+  .bg-transition {
+    transition: background 500ms ease-in-out;
+  }
+  
+  /* Progress Ring Transition - matches timer tick */
+  .stroke-transition {
+    transition: stroke-dashoffset 1s linear;
+  }
+  
+  /* Disable text selection on timer */
+  .select-none-force {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Gradient backgrounds for each mode */
+  .bg-gradient-focus {
+    background: linear-gradient(135deg, var(--focus-bg-from), var(--focus-bg-to));
+  }
+  
+  .bg-gradient-short-break {
+    background: linear-gradient(135deg, var(--short-break-bg-from), var(--short-break-bg-to));
+  }
+  
+  .bg-gradient-long-break {
+    background: linear-gradient(135deg, var(--long-break-bg-from), var(--long-break-bg-to));
+  }
+}
